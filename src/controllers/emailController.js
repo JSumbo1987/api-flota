@@ -24,10 +24,12 @@ require('dotenv').config();
 
   const enviarMailResetPassword = (req, res)=>{
     const { to, nomeUsuario, novaSenha } = req.body;
+    const url_login = process.env.URL_LOGIN;
     const subject = 'Sua senha foi resetada - Flota Vista';
     const htmlBody = htmlResetPassword
                         .replace('{{nomeUsuario}}', nomeUsuario)
-                        .replace('{{novaSenha}}', novaSenha);
+                        .replace('{{novaSenha}}', novaSenha)
+                        .replace('{{url_login}}', url_login);
     try {
       sendMail(to, subject, htmlBody);
       return res.status(200).json({message:"E-mail enviado com sucesso."});
