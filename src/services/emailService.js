@@ -23,6 +23,7 @@ const transporter = nodemailer.createTransport({
 
 //Envio de e-mail de confirmação.
 const sendMail = (to, subject, body)=>{
+  console.error("Estou na função de enviar e-mail.");
   transporter.sendMail({
     from: `"Flota Vista" <${process.env.EMAIL_FROM}>`,
     to: to,
