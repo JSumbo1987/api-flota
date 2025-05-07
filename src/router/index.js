@@ -2,13 +2,10 @@
 const express = require('express');
 const router = express.Router();
 const sendMail = require('../controllers/emailController');
+const { welcomeRoute } = require('../controllers/notificationController');
 
 //Rota Padrão
-router.get('/', async (req, res) => {
-  return res.status(200).json({
-    message: "Bem-Vindo a API de integração com o sistema de gestão de Frota."
-  });
-});
+router.get('/', welcomeRoute);
 
 // Enviar confirmação
 router.post("/send-confirmation", sendMail.saveConfirmationEmail);
