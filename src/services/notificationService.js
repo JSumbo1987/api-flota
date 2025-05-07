@@ -1,6 +1,20 @@
 // services/notifications.js
 const { supabase } = require('../config/supabaseClient');
 
+function calcularDiasParaVencer(dataVencimentoStr) {
+  const hoje = new Date();
+  hoje.setHours(0, 0, 0, 0); // Zera o tempo
+
+  const dataVencimento = new Date(dataVencimentoStr);
+  dataVencimento.setHours(0, 0, 0, 0); // Zera o tempo
+
+  const diffEmMs = dataVencimento.getTime() - hoje.getTime();
+  const diasParaVencer = Math.ceil(diffEmMs / (1000 * 60 * 60 * 24));
+
+  return diasParaVencer;
+};
+
+
   function formatDate(dateStr) {
     const date = new Date(dateStr);
     const year = date.getFullYear();
@@ -82,35 +96,59 @@ const { supabase } = require('../config/supabaseClient');
         const tituloBase = `${label} (Nº ${item[fieldNumber]})`;
 
         //Calcular diferença de dias.
-        const diffDias = Math.ceil((dataVal - hoje) / (1000 * 60 * 60 * 24));
+        const diffDias = calcularDiasParaVencer(dataStr);
   
-        // Expira hoje
-        if (formatDate(dataStr) === formatDate(hojeStr)) {
-          await saveNotification(
-            `${tituloBase} expira hoje`,
-            `Vencimento em ${dataStr}`,
-            'error',
-            `${rota}/${idField}`
-          );
-        }
-        // Expira em 15 dias
-        else if (diffDias === 15 || diffDias === 5) {
-          await saveNotification(
-            `${tituloBase} expira em ${diffDias} dias`,
-            `Vencimento em ${dataStr}`,
-            'warning',
-            `${rota}/${idField}`
-          );
-        }
-        // Expira neste mês
-        else if (dataVal >= formatDate(primeiroDia) && dataVal <= formatDate(ultimoDia)) {
-          await saveNotification(
-            `${tituloBase} expira este mês`,
-            `Vencimento em ${dataStr}`,
-            'info',
-            `${rota}/${idField}`
-          );
-        }
+        switch (true) {
+          case diffDias < 0:
+            await saveNotification(
+              `${tituloBase} expirado`,
+              `Vencimento em ${dataStr}`,
+              'error',
+              `${rota}/${item[idField]}`
+            );
+            break;
+        
+          case diffDias === 0:
+            await saveNotification(
+              `${tituloBase} expira hoje`,
+              `Vencimento em ${dataStr}`,
+              'error',
+              `${rota}/${item[idField]}`
+            );
+            break;
+        
+          case diffDias >= 1 && diffDias <= 5:
+            await saveNotification(
+              `${tituloBase} expira em ${diffDias} dias`,
+              `Vencimento em ${dataStr}`,
+              'warning',
+              `${rota}/${item[idField]}`
+            );
+            break;
+        
+          case diffDias === 15:
+            await saveNotification(
+              `${tituloBase} expira em 15 dias`,
+              `Vencimento em ${dataStr}`,
+              'warning',
+              `${rota}/${item[idField]}`
+            );
+            break;
+        
+          case diffDias > 15 &&
+               dataVal >= primeiroDia &&
+               dataVal <= ultimoDia:
+            await saveNotification(
+              `${tituloBase} expira este mês`,
+              `Vencimento em ${dataStr}`,
+              'info',
+              `${rota}/${item[idField]}`
+            );
+            break;
+        
+          default:
+            break;
+        }               
       }
     }
   };
