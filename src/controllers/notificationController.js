@@ -8,4 +8,4 @@ const checkDocumentos = async(req, res)=>{
     }
 };
 
-module.exports = { checkDocumentos };
+module.exports = checkDocumentos;
