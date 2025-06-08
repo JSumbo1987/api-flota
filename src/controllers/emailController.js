@@ -52,9 +52,7 @@ require('dotenv').config();
       const { error } = await supabase.from("tblemailconfirmacao")
           .insert([{ email, token, userid }]);
     
-      if (error) return res.status(500).json({ error: error.message });
-      console.log("Depois Aqui...");
-    
+      if (error) return res.status(500).json({ error: error.message });    
      try {
         const subject = 'Confirme seu e-mail no Flota Vista';
         sendMail(to, subject, htmlBody);
