@@ -53,11 +53,11 @@ require('dotenv').config();
           .insert([{ email, token, userid }]);
     
       if (error) return res.status(500).json({ error: error.message });
+      console.log("Depois Aqui...");
     
      try {
         const subject = 'Confirme seu e-mail no Flota Vista';
         sendMail(to, subject, htmlBody);
-        console.log('Estou a fazer um teste depois da função de enviar e-mail.');
         res.status(200).json({ message: "E-mail de confirmação enviado com sucesso!" });
       } catch (err) {
         return res.status(500).json({message:" Erro ao enviar o e-mail de confirmação. Por favor verifica a console",err});
