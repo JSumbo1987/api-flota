@@ -28,13 +28,14 @@ const enviarMail = (to, subject, body)=>{
     from: `'Flota Vista' <${process.env.EMAIL_FROM}>`,
     to: to,
     subject: subject,
-    html: body,
+    html: body
   }, (error, info) => {
     if (error) {
       return console.error("Erro ao enviar e-mail:", error);
     }
     console.log(`E-mail enviado para ${email}: ${info.response}`);
   });
+  console.log("Foi Tudo. ",info);
 };
 
 function enviarEmailDocumentosExpirados(destinatario, documentos) {
