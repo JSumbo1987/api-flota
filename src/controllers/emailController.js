@@ -10,6 +10,7 @@ require('dotenv').config();
   let htmlConfirmarEmail = fs.readFileSync(path.join(__dirname, "../upload/confirmar-email.html"), 'utf-8');
   let htmlResetPassword  = fs.readFileSync(path.join(__dirname, "../upload/reset-senha.html"), 'utf-8');
   let htmlNotificacoes   = fs.readFileSync(path.join(__dirname, "../upload/notificacoes.html"), 'utf-8');
+  console.log("Nossa Logo: ",htmlLogo);
 
   const enviarMailNotificacao = (req, res)=>{
     const { to } = req.body;
