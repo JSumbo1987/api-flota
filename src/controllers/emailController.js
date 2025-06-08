@@ -6,6 +6,7 @@ const { sendMail } = require("../services/emailService");
 require('dotenv').config();
 
   //Carregar Ficheiros HTML.
+  let htmlLogo = fs.readFileSync(path.join(__dirname, "../upload/logo.png"), 'utf-8');
   let htmlConfirmarEmail = fs.readFileSync(path.join(__dirname, "../upload/confirmar-email.html"), 'utf-8');
   let htmlResetPassword  = fs.readFileSync(path.join(__dirname, "../upload/reset-senha.html"), 'utf-8');
   let htmlNotificacoes   = fs.readFileSync(path.join(__dirname, "../upload/notificacoes.html"), 'utf-8');
@@ -30,7 +31,8 @@ require('dotenv').config();
     const htmlBody = htmlResetPassword
       .replace('{{nomeUsuario}}', nomeUsuario)
       .replace('{{novaSenha}}', novaSenha)
-      .replace('{{url_login}}', url_login);
+      .replace('{{url_login}}', url_login)
+      .replace('{{htmlLogo}}', htmlLogo);
   
     try {
       sendMail(to, subject, htmlBody); // <- use await se for assíncrono
@@ -41,7 +43,6 @@ require('dotenv').config();
     }
   };
   
-
   //Salvar os dados do e-mail de confirmação.
   const saveConfirmationEmail = async(req, res)=>{
       const { to, userid } = req.body;
