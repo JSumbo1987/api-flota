@@ -33,6 +33,8 @@ require('dotenv').config();
       .replace('{{url_login}}', url_login);
   
     try {
+      console.log("Requisição recebida para enviar e-mail de reset de senha:", to);
+
       sendMail(to, subject, htmlBody); // <- use await se for assíncrono
       return res.status(200).json({ message: "E-mail enviado com sucesso." });
     } catch (error) {
