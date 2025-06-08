@@ -1,7 +1,5 @@
 const nodemailer = require("nodemailer");
 require("dotenv").config();
-const path = require("path");
-const logoPath = path.join(__dirname, "../upload/logo.png"); 
 
 //Criar o Transporte SMTP.
 /*const transporter = nodemailer.createTransport({
@@ -30,13 +28,6 @@ const sendMail = (to, subject, body)=>{
     to: to,
     subject: subject,
     html: body,
-    attachments: [
-      {
-        filename: 'logo.png',
-        path: logoPath,
-        cid: 'logo@flotavista' // referência que será usada no HTML
-      }
-    ]
   }, (error, info) => {
     if (error) {
       return console.error("Erro ao enviar e-mail:", error);
@@ -75,7 +66,7 @@ function gerarEmailHTML(documentos) {
   <body style="font-family: Arial, sans-serif; background-color: #ffffff; padding: 20px; color: #000000;">
     <div style="max-width: 600px; margin: auto; border: 1px solid #ddd; padding: 40px; border-radius: 8px;">
       <div style="text-align: center;">
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA3sAAAMbCAYAAAD0OYy5AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjw...SUORK5CYII=" alt="Flota Vista" style="width: 150px; margin-bottom: 30px;">
+        <img src="" alt="Flota Vista" style="width: 150px; margin-bottom: 30px;">
       </div>
       <h2 style="color: #d32f2f;">Atenção! Documentos vencidos ou a vencer</h2>
       <p>Detectamos que os seguintes documentos vinculados à sua frota precisam de atenção:</p>
