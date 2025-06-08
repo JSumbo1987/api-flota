@@ -22,7 +22,7 @@ require('dotenv').config();
     }
   };
 
-  const enviarMailResetPassword = async(req, res) => {
+  const enviarMailResetPassword = (req, res) => {
     const { to, nomeUsuario, novaSenha } = req.body;
     const url_login = process.env.URL_LOGIN;
     const subject = 'Sua senha foi resetada - Flota Vista';
@@ -33,7 +33,7 @@ require('dotenv').config();
       .replace('{{url_login}}', url_login);
   
     try {
-      await sendMail(to, subject, htmlBody); // <- use await se for assíncrono
+      sendMail(to, subject, htmlBody); // <- use await se for assíncrono
       return res.status(200).json({ message: "E-mail enviado com sucesso." });
     } catch (error) {
       console.error("Erro ao enviar e-mail:", error);
