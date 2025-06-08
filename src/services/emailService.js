@@ -4,6 +4,7 @@ const fs = require('fs');
 require("dotenv").config();
 
 let htmlLogo = fs.readFileSync(path.join(__dirname, "../upload/logo.png"), 'utf-8');
+console.log(htmlLogo);
 
 //Criar o Transporte SMTP.
 /*const transporter = nodemailer.createTransport({
@@ -27,7 +28,6 @@ const transporter = nodemailer.createTransport({
 
 //Envio de e-mail de confirmação.
 const sendMail = (to, subject, body)=>{
-  console.error("Estou na função de enviar e-mail.");
   transporter.sendMail({
     from: `'Flota Vista' <${process.env.EMAIL_FROM}>`,
     to: to,
@@ -71,7 +71,7 @@ function gerarEmailHTML(documentos) {
   <body style="font-family: Arial, sans-serif; background-color: #ffffff; padding: 20px; color: #000000;">
     <div style="max-width: 600px; margin: auto; border: 1px solid #ddd; padding: 40px; border-radius: 8px;">
       <div style="text-align: center;">
-        <img src="${htmlLogo}" alt="Flota Vista" style="width: 150px; margin-bottom: 30px;">
+        <img src="" alt="Flota Vista" style="width: 150px; margin-bottom: 30px;">
       </div>
       <h2 style="color: #d32f2f;">Atenção! Documentos vencidos ou a vencer</h2>
       <p>Detectamos que os seguintes documentos vinculados à sua frota precisam de atenção:</p>
