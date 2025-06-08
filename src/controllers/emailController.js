@@ -55,7 +55,7 @@ require('dotenv').config();
       if (error) return res.status(500).json({ error: error.message });    
      try {
         const subject = 'Confirme seu e-mail no Flota Vista';
-        enviarMail(to, subject, htmlBody);
+        await enviarMail(to, subject, htmlBody);
         res.status(200).json({ message: "E-mail de confirmação enviado com sucesso!" });
       } catch (err) {
         return res.status(500).json({message:" Erro ao enviar o e-mail de confirmação. Por favor verifica a console",err});
