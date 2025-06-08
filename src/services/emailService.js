@@ -23,7 +23,9 @@ const transporter = nodemailer.createTransport({
 
 //Envio de e-mail de confirmação.
 const enviarMail = (destinatario, assunto, body)=>{
-
+console.log("destino: ", destinatario);
+console.log("Asunto: ", assunto);
+console.log("Corpo: ", body);
   const mailOptions = {
     from:  `'Flota Vista' <${process.env.EMAIL_FROM}>`,
     to: destinatario,
