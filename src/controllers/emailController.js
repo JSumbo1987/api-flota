@@ -2,7 +2,7 @@ const path = require("path");
 const fs = require('fs');
 const { v4: uuidv4 } = require("uuid");
 const { supabase } = require('../config/supabaseClient');
-const { sendMail } = require("../services/emailService");
+const { enviarMail } = require("../services/emailService");
 require('dotenv').config();
 
   //Carregar Ficheiros HTML.
@@ -15,7 +15,7 @@ require('dotenv').config();
     const subject = 'Aviso de Documentos Expirados';
 
     try {
-      sendMail(to, subject, htmlNotificacoes);
+      enviarMail(to, subject, htmlNotificacoes);
       return res.status(200).json({message:"E-mail enviado com sucesso."});
     } catch (error) {
       return res.status(500).json({message:"",error});
@@ -35,7 +35,7 @@ require('dotenv').config();
     try {
       console.log("Requisição recebida para enviar e-mail de reset de senha:", to);
 
-      sendMail(to, subject, htmlBody); // <- use await se for assíncrono
+      enviarMail(to, subject, htmlBody); // <- use await se for assíncrono
       return res.status(200).json({ message: "E-mail enviado com sucesso." });
     } catch (error) {
       console.error("Erro ao enviar e-mail:", error);
@@ -57,7 +57,7 @@ require('dotenv').config();
       if (error) return res.status(500).json({ error: error.message });    
      try {
         const subject = 'Confirme seu e-mail no Flota Vista';
-        sendMail(to, subject, htmlBody);
+        enviarMail(to, subject, htmlBody);
         res.status(200).json({ message: "E-mail de confirmação enviado com sucesso!" });
       } catch (err) {
         return res.status(500).json({message:" Erro ao enviar o e-mail de confirmação. Por favor verifica a console",err});

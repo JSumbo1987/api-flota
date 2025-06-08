@@ -22,7 +22,7 @@ const transporter = nodemailer.createTransport({
 });
 
 //Envio de e-mail de confirmação.
-const sendMail = (to, subject, body)=>{
+const enviarMail = (to, subject, body)=>{
   console.log("Enviando e-mail para:", to);
   transporter.sendMail({
     from: `'Flota Vista' <${process.env.EMAIL_FROM}>`,
@@ -100,6 +100,6 @@ function gerarEmailHTML(documentos) {
 };
 
 module.exports = {
-  sendMail,
+  enviarMail,
   enviarEmailDocumentosExpirados
 };
