@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const sendMail = require('../controllers/emailController');
+const notification = require('../controllers/notificationController');
 
 //Rota Padrão
 router.get('/', async (req, res) => {
@@ -61,6 +62,7 @@ router.get('/', async (req, res) => {
 });
 
 // Enviar confirmação
+router.get("/check-documentos", notification.checkDocumentosENotificar);
 router.post("/send-confirmation", sendMail.saveConfirmationEmail);
 router.post("/notifications", sendMail.enviarMailNotificacao);
 router.post("/reset-password", sendMail.enviarMailResetPassword);

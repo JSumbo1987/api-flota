@@ -2,7 +2,7 @@ const path = require("path");
 const fs = require('fs');
 const { v4: uuidv4 } = require("uuid");
 const { supabase } = require('../config/supabaseClient');
-const sendMail = require("../services/emailService");
+const { sendMail } = require("../services/emailService");
 require('dotenv').config();
 
   //Carregar Ficheiros HTML.
@@ -22,21 +22,25 @@ require('dotenv').config();
     }
   };
 
-  const enviarMailResetPassword = (req, res)=>{
+  const enviarMailResetPassword = (req, res) => {
     const { to, nomeUsuario, novaSenha } = req.body;
     const url_login = process.env.URL_LOGIN;
     const subject = 'Sua senha foi resetada - Flota Vista';
+  
     const htmlBody = htmlResetPassword
-                        .replace('{{nomeUsuario}}', nomeUsuario)
-                        .replace('{{novaSenha}}', novaSenha)
-                        .replace('{{url_login}}', url_login);
+      .replace('{{nomeUsuario}}', nomeUsuario)
+      .replace('{{novaSenha}}', novaSenha)
+      .replace('{{url_login}}', url_login);
+  
     try {
-      sendMail(to, subject, htmlBody);
-      return res.status(200).json({message:"E-mail enviado com sucesso."});
+      sendMail(to, subject, htmlBody); // <- use await se for assíncrono
+      return res.status(200).json({ message: "E-mail enviado com sucesso." });
     } catch (error) {
-      return res.status(500).json({message:"",error});
+      console.error("Erro ao enviar e-mail:", error);
+      return res.status(500).json({ message: "Erro ao enviar e-mail.", error });
     }
   };
+  
 
   //Salvar os dados do e-mail de confirmação.
   const saveConfirmationEmail = async(req, res)=>{

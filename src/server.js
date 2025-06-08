@@ -3,7 +3,7 @@ const path = require("path");
 require('dotenv').config();
 const express = require('express');
 const cron = require('node-cron');
-const checkDocumentos = require('./controllers/notificationController');
+const { checkDocumentosENotificar } = require('./controllers/notificationController');
 const router = require('./router');
 const cors = require('cors');
 
@@ -28,14 +28,14 @@ app.use(express.static(path.join(__dirname, 'upload')));
 app.use('/api', router);
 
 // Job que roda todos os dias às 00:00
-cron.schedule('* * * * *', async () => {
+/*cron.schedule('* * * * *', async () => {
     try {
-      await checkDocumentos();
+      await checkDocumentosENotificar();
       console.log("Job Rodando...");
     } catch (err) {
       console.error("Erro ao rodar o cron job:", err);
     }
-});
+});*/
   
 
 const PORT = process.env.PORT || 3000;
